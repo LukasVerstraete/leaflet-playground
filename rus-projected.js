@@ -390,6 +390,7 @@ L.Edit.PolyVerticesEdit.prototype._createMiddleMarker = function (marker1, marke
     }
 
     onDragEnd = function () {
+        this.updateMarkers();
         // marker.off('dragstart', onDragStart, this);
         // marker.off('dragend', onDragEnd, this);
         // marker.off('touchmove', onDragStart, this);
