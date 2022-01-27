@@ -9,7 +9,6 @@ const crsResolutions = [
 var LatLngBoundsProto = L.LatLngBounds.prototype;
 
 L.LatLngBounds = function(corner1, corner2) {
-    // console.log(corner1, corner2);
     if (!corner1) { return; }
 
 	var latlngs = corner2 ? [corner1, corner2] : corner1;
@@ -23,7 +22,6 @@ L.LatLngBounds = function(corner1, corner2) {
 L.LatLngBounds.prototype = {...LatLngBoundsProto};
 
 L.LatLngBounds.prototype._setCorners = function(latlngs) {
-    // console.log('latlngs', latlngs);
     this._corner1 = latlngs[0];
     this._corner2 = latlngs.length > 2 ? latlngs[2] : latlngs[1];
 }
@@ -39,12 +37,6 @@ var toLatLngBounds = function (a, b) {
 
 L.Rectangle.prototype._boundsToLatLngs = function(latLngBounds) {
     latLngBounds = toLatLngBounds(latLngBounds);
-    // console.log(latLngBounds, [latLngBounds.getSouthWest(),
-    //     latLngBounds.getNorthWest(),
-    //     latLngBounds.getNorthEast(),
-    //     latLngBounds.getSouthEast()]);
-
-    // const point1 = latLngBounds._corner1;
 
     const {_corner1} = latLngBounds;
 
@@ -91,8 +83,6 @@ L.Rectangle.prototype._projectLatlngs = function (latlngs, result, projectedBoun
     projectedBounds.extend(point2);
     projectedBounds.extend(point3);
     projectedBounds.extend(point4);
-
-    // console.log(point1, point2, point3, point4);
 
     result.push([point1, point2, point3, point4]);
 }
@@ -141,8 +131,6 @@ L.Edit.Rectangle.prototype._getCenterPoint = function () {
     const {_corner1, _corner2} = this._shape._bounds;
     const point1 = this._map.latLngToLayerPoint(_corner1);
     const point3 = this._map.latLngToLayerPoint(_corner2);
-
-    // const [point1, _, point3, __] = this._getPoints();
 
     const minX = Math.min(point1.x, point3.x);
     const maxX = Math.max(point1.x, point3.x);
@@ -211,7 +199,6 @@ L.Edit.Rectangle.prototype._onMarkerDragEnd = function (e) {
     var marker = e.target,
         bounds, center;
 
-    // Reset move marker position to the center
     if (marker === this._moveMarker) {
 
         marker.setLatLng(this._getCenter());
@@ -232,150 +219,28 @@ L.Edit.Rectangle.prototype._resize = function (latlng) {
     this._map.fire(L.Draw.Event.EDITRESIZE, {layer: this._shape});
 }
 
-// L.Edit.PolyVerticesEdit.prototype._defaultShape = function () {
-//     if (!L.Polyline.isFlat) {
-//         return this._latlngs;
-//     }
-//     return L.Polyline.isFlat(this._latlngs) ? this._latlngs : this._latlngs[0];
-// }
-
-// L.Edit.PolyVerticesEdit.prototype._onMarkerDrag = function (event) {
-//     // console.log(this._poly);
-//     var marker = event.target;
-//     var poly = this._poly;
-
-//     var oldOrigLatLng = L.LatLngUtil.cloneLatLng(marker._origLatLng);
-//     L.extend(marker._origLatLng, marker._latlng);
-
-
-//     if (poly.options.poly) {
-//         var tooltip = poly._map._editTooltip; // Access the tooltip
-
-//         // If we don't allow intersections and the polygon intersects
-//         if (!poly.options.poly.allowIntersection && poly.intersects()) {
-//             L.extend(marker._origLatLng, oldOrigLatLng);
-//             marker.setLatLng(oldOrigLatLng);
-//             var originalColor = poly.options.color;
-//             poly.setStyle({color: this.options.drawError.color});
-//             if (tooltip) {
-//                 tooltip.updateContent({
-//                     text: L.drawLocal.draw.handlers.polyline.error
-//                 });
-//             }
-
-//             // Reset everything back to normal after a second
-//             setTimeout(function () {
-//                 poly.setStyle({color: originalColor});
-//                 if (tooltip) {
-//                     tooltip.updateContent({
-//                         text: L.drawLocal.edit.handlers.edit.tooltip.text,
-//                         subtext: L.drawLocal.edit.handlers.edit.tooltip.subtext
-//                     });
-//                 }
-//             }, 1000);
-//         }
-//     }
-
-//     // console.log(marker._middleLeft, marker._middleRight);
-
-//     if (marker._middleLeft) {
-//         marker._middleLeft.setLatLng(this._getMiddleLatLng(marker._prev, marker));
-//     }
-//     if (marker._middleRight) {
-//         marker._middleRight.setLatLng(this._getMiddleLatLng(marker, marker._next));
-//     }
-
-//     //refresh the bounds when draging
-//     this._poly._bounds._southWest = L.latLng(Infinity, Infinity);
-//     this._poly._bounds._northEast = L.latLng(-Infinity, -Infinity);
-//     var latlngs = this._poly.getLatLngs();
-//     this._poly._convertLatLngs(latlngs, true);
-//     this._poly.redraw();
-//     this._poly.fire('editdrag');
-// }
-
-// L.MarkerDrag.prototype._onDrag = function (e) {
-//     console.log(e);
-//     var marker = this._marker,
-//         shadow = marker._shadow,
-//         iconPos = DomUtil.getPosition(marker._icon),
-//         latlng = marker._map.layerPointToLatLng(iconPos);
-
-//     // update shadow position
-//     if (shadow) {
-//         DomUtil.setPosition(shadow, iconPos);
-//     }
-
-//     marker._latlng = latlng;
-//     e.latlng = latlng;
-//     e.oldLatLng = this._oldLatLng;
-
-//     // @event drag: Event
-//     // Fired repeatedly while the user drags the marker.
-//     marker
-//         .fire('move', e)
-//         .fire('drag', e);
-// };
-
 L.Edit.PolyVerticesEdit.prototype._createMiddleMarker = function (marker1, marker2) {
-
-    // console.log();
     var latlng = this._getMiddleLatLng(marker1, marker2),
         marker = this._createMarker(latlng),
         onClick,
         onDragStart,
         onDragEnd;
 
-    // marker.setOpacity(0.6);
-
     marker1._middleRight = marker2._middleLeft = marker;
 
     onDragStart = function () {
-        // marker.off('touchmove', onDragStart, this);
-        // var i = marker2._index;
-
-        // marker._index = i;
-
-        // marker
-        //     .off('click', onClick, this)
-        //     .on('click', this._onMarkerClick, this);
-
-        // latlng.lat = marker.getLatLng().lat;
-        // latlng.lng = marker.getLatLng().lng;
-        // this._spliceLatLngs(i, 0, latlng);
-        // this._markers.splice(i, 0, marker);
-
-        // marker.setOpacity(1);
-
-        // this._updateIndexes(i, 1);
-        // marker2._index++;
-        // // this._updatePrevNext(marker1, marker);
-        // // this._updatePrevNext(marker, marker2);
-
-        // this._poly.fire('editstart');
     };
 
     const onDrag = function(event) {
-        // console.log(event);
-        // console.log(this);
-
         const oldPoint = this._map.latLngToLayerPoint(marker._oldLatLng ? marker._oldLatLng : event.oldLatLng);
         const point = this._map.latLngToLayerPoint(event.latlng);
-        // console.log(oldPoint);
 
         const offsetX = point.x - oldPoint.x;
         const offsetY = point.y - oldPoint.y;
 
         const offsetPoint = new L.Point(offsetX, offsetY);
-        // console.log(offsetPoint);
 
         const coords = this._latlngs;
-
-        // const points = coords.map(coord => {
-        //     return this._map.latLngToLayerPoint(coord);
-        // });
-
-        // console.log(points);
 
         const newCoords = coords.map(coord => {
             return this._map.layerPointToLatLng(this._map.latLngToLayerPoint(coord).add(offsetPoint));
@@ -385,27 +250,13 @@ L.Edit.PolyVerticesEdit.prototype._createMiddleMarker = function (marker1, marke
         this._poly.setLatLngs(newCoords);
         this._markers.forEach((m, index) => m.setLatLng(newCoords[index]));
         marker._oldLatLng = event.latlng;
-        // this.updateMarkers();
     }
 
     onDragEnd = function () {
         this.updateMarkers();
-        // marker.off('dragstart', onDragStart, this);
-        // marker.off('dragend', onDragEnd, this);
-        // marker.off('touchmove', onDragStart, this);
-
-        // this._createMiddleMarker(marker1, marker);
-        // this._createMiddleMarker(marker, marker2);
     };
-
-    // onClick = function () {
-    //     onDragStart.call(this);
-    //     onDragEnd.call(this);
-    //     this._fireEdit();
-    // };
     console.log('adding listeners');
     marker
-        // .on('click', onClick, this)
         .on('dragstart', onDragStart, this)
         .on('drag', onDrag, this)
         .on('dragend', onDragEnd, this)
@@ -461,10 +312,6 @@ L.Edit.PolyVerticesEdit.prototype._initMarkers = function () {
             this._createMiddleMarker(markerLeft, markerRight);
             this._updatePrevNext(markerLeft, markerRight);
         }
-
-        // if () {
-            // abc = true;
-        // }
     }
 }
 
@@ -487,11 +334,7 @@ const csrRusland = new L.Proj.CRS(
 );
 
 L.CRS.Earth.distance = earthDist;
-
-// csrRusland.distance = undefined;
-// console.log('crs', csrRusland);
 csrRusland.distance = (lat, lng) => {return L.CRS.Earth.distance(lat, lng)}
-// console.log('crs', csrRusland.distance, L.CRS.Earth.distance);
 
 
 const rusParams = {
@@ -510,76 +353,22 @@ const unprojbounds = bounds;
 const map = L.map('map', {
     crs: rusParams.crs,
     drawControl: {edit: true}
-    // bounds: projBounds
 });
-
-// const featureGroup = L.featureGroup();
-// map.addLayer(featureGroup);
-
-// const drawControl = L.Control.Draw({
-//     edit: {
-//         featureGroup
-//     }
-// });
-// map.addControl(drawControl);
-
-// _reset: function () {
-//     // defined in child classes
-//     this._project();
-//     this._update();
-// }
-
-
-
-
-// const rusBounds = L.bounds(
-//     map.project(rusParams.bounds.corner),
-//     map.project(rusParams.bounds.oppositeCorner)
-// );
 const rusBounds = L.bounds(
     csrRusland.project(unprojbounds.getSouthEast()),
     csrRusland.project(unprojbounds.getNorthWest())
 );
 
-// const imgLayer = L.imageOverlay(rusParams.image, unprojbounds).addTo(map);
 const test = svgOverlay(rusParams.image, rusBounds).addTo(map);
-
-// const imageLayer = L.Proj.imageOverlay(rusParams.image, rusBounds, { interactive: true }).addTo(map);
-// map.fitBounds(projBounds);
 
 map.setView(map.unproject(projBounds.getCenter()), 1);
 var result = await fetch(rusImage);
 test.setInnerHtml(await result.text());
 
-// const unProjCorner = rusParams.bounds.corner;
-// const projCorner = map.project(rusParams.bounds.corner);
-// const unProjOppositeCorner = rusParams.bounds.oppositeCorner;
-// const projOppositeCorner = map.project(rusParams.bounds.oppositeCorner);
-// console.log("-------------------");
-// console.log("corner", unProjCorner);
-// console.log("opposite", unProjOppositeCorner);
-// console.log("projected corner", projCorner);
-// console.log("projected opposite", projOppositeCorner);
-// console.log("reverse corner", map.unproject(projCorner));
-// console.log("reverse opposite", map.unproject(projOppositeCorner));
-// console.log("-------------------");
-
 map.on('load', () => {
     map.setView(projBounds.getCenter());
 });
 
-map.on('zoom', () => {
-    // console.log({
-    //     zoom: map.getZoom(),
-    //     bounds: map.getBounds(),
-    //     center: map.getBounds().getCenter()
-    // });
-});
-
-// imageLayer.on('click', (event) => {
-//     console.log('image: ', `${event.latlng.lat},${event.latlng.lng}`);
-//     // navigator.clipboard.writeText(`${event.latlng.lat},${event.latlng.lng}`);
-// });
 
 var circle = L.circle([50.7223593985963,23.022141771511077], {
     color: 'red',
@@ -596,16 +385,13 @@ map.on('click', (event) => {
 });
 
 map.on(L.Draw.Event.CREATED, (e) => {
-    // featureGroup.addLayer(e.layer);
     const {layer} = e;
     layer.editing.enable();
 
     map.addLayer(layer);
  });
 
- const cb = document.getElementById("checkbox");
- cb.addEventListener('change', (e) => {
-    //  console.log(test._image);
-    // console.log(e.target.checked);
+ const checkbox = document.getElementById("checkbox");
+ checkbox.addEventListener('change', (e) => {
     document.getElementById('L1').style.display = e.target.checked ? 'unset' : 'none';
  });
