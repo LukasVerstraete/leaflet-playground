@@ -11,10 +11,10 @@ var LatLngBoundsProto = L.LatLngBounds.prototype;
 L.LatLngBounds = function(corner1, corner2) {
     // console.log(corner1, corner2);
     if (!corner1) { return; }
-    
+
 	var latlngs = corner2 ? [corner1, corner2] : corner1;
     this._setCorners(latlngs);
-    
+
 	for (var i = 0, len = latlngs.length; i < len; i++) {
         this.extend(latlngs[i]);
 	}
@@ -83,17 +83,17 @@ L.Rectangle.prototype._projectLatlngs = function (latlngs, result, projectedBoun
 
     const point1 = this._map.latLngToLayerPoint(_corner1);
     const point3 = this._map.latLngToLayerPoint(_corner2);
-    
+
     const point2 = new L.Point(point3.x, point1.y);
     const point4 = new L.Point(point1.x, point3.y);
-    
+
     projectedBounds.extend(point1);
     projectedBounds.extend(point2);
     projectedBounds.extend(point3);
     projectedBounds.extend(point4);
 
     // console.log(point1, point2, point3, point4);
-    
+
     result.push([point1, point2, point3, point4]);
 }
 
@@ -174,7 +174,7 @@ L.Edit.Rectangle.prototype._move = function (newCenter) {
 
     const centerPoint = this._getCenterPoint();
     let newCenterPoint = this._map.latLngToLayerPoint(newCenter);
-    
+
     const xOffset = newCenterPoint.x - centerPoint.x;
     const yOffset = newCenterPoint.y - centerPoint.y;
     const offsetPoint = new L.Point(xOffset, yOffset);
@@ -183,7 +183,7 @@ L.Edit.Rectangle.prototype._move = function (newCenter) {
 
     const point1 = this._map.latLngToLayerPoint(_corner1);
     const point3 = this._map.latLngToLayerPoint(_corner2);
-    
+
     const newPoint1 = point1.add(offsetPoint);
     const newPoint3 = point3.add(offsetPoint);
 
@@ -203,7 +203,7 @@ L.Edit.Rectangle.prototype._move = function (newCenter) {
 
     this._shape.setBounds(new L.LatLngBounds(coord1, coord3));
     this._repositionCornerMarkers();
-    
+
     this._map.fire(L.Draw.Event.EDITMOVE, {layer: this._shape});
 }
 
@@ -359,7 +359,6 @@ L.Edit.PolyVerticesEdit.prototype._createMiddleMarker = function (marker1, marke
         // console.log(event);
         // console.log(this);
 
-        console.log(marker._oldLatLng);
         const oldPoint = this._map.latLngToLayerPoint(marker._oldLatLng ? marker._oldLatLng : event.oldLatLng);
         const point = this._map.latLngToLayerPoint(event.latlng);
         // console.log(oldPoint);
@@ -413,15 +412,13 @@ L.Edit.PolyVerticesEdit.prototype._createMiddleMarker = function (marker1, marke
         .on('touchmove', onDragStart, this);
 
 
-    
+
     this._markerGroup.addLayer(marker);
 }
 
 L.Edit.PolyVerticesEdit.prototype._defaultShape = function() {
     return L.Polyline.isFlat ? L.Polyline.isFlat(this._latlngs) ? this._latlngs : this._latlngs[0] : this._latlngs;
 }
-
-let abc = false;
 
 L.Edit.PolyVerticesEdit.prototype.updateMarker = function() {
     this._markerGroup.clearLayers();
@@ -479,7 +476,7 @@ const projBounds = L.bounds([-624.8002276396273, -524.3640295814912], [565.91076
 const earthDist = L.CRS.Earth.distance;
 L.CRS.Earth.distance = () => {};
 
-const rusImage = './RUS.svg';
+const rusImage = './Usm12500.svg';
 const csrRusland = new L.Proj.CRS(
     'EPSG:2400',
     '+proj=lcc +lat_1=40 +lat_2=70 +lat_0=55 +lon_0=92 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs',
@@ -493,7 +490,7 @@ L.CRS.Earth.distance = earthDist;
 
 // csrRusland.distance = undefined;
 // console.log('crs', csrRusland);
-csrRusland.distance = (lat, lng) => {return L.CRS.Earth.distance(lat, lng)} 
+csrRusland.distance = (lat, lng) => {return L.CRS.Earth.distance(lat, lng)}
 // console.log('crs', csrRusland.distance, L.CRS.Earth.distance);
 
 
@@ -551,7 +548,7 @@ const test = svgOverlay(rusParams.image, rusBounds).addTo(map);
 // map.fitBounds(projBounds);
 
 map.setView(map.unproject(projBounds.getCenter()), 1);
-var result = await fetch('./RUS.svg');
+var result = await fetch(rusImage);
 test.setInnerHtml(await result.text());
 
 // const unProjCorner = rusParams.bounds.corner;
