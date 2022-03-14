@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./fonts/fonts.css">
         <title>Document</title>
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -16,13 +17,41 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.5/proj4.js" integrity="sha512-MMmVaQGDVI3Wouc5zT5G7k/snN9gPqquIhZsHgIIHVDlRgYTYGxrwu6w482iIhAq8n5R6+pcBgpGgxFFBz7rZA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4leaflet/1.0.2/proj4leaflet.js" integrity="sha512-NA+0vegFw6AiYXT23H+hk43LxqwpJkkviK/vHTESeu+jUpvWssfQRWWqSR07aUhGSKtfpkdlE8YFrVaHsnb3jw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/451/fabric.js" integrity="sha512-dtiNm9C8FwmoX5+zAtJTTKM9EBXVlmdlH5AwBkSldaBnvAG2gnQnhzfbtCXMyZeOJrMEXynqWk1aTkhw1YXTmg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/canvg/3.0.10/umd.js" integrity="sha512-XzD6JvbRszCVIgiNU2pgCFnCtHmgu5sDydUMFNeuNkWKCccMYTJLxbe0r+PG4QNeDx7NMcrPWmztn185dHPLPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     </head>
     <body>
         <div id="map"></div>
         <label for="checkbox" style="user-select: none;">Legenda</label>
         <input id="checkbox" type="checkbox" />
+        <button id="load-btn">Load image</button>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <svg viewBox="0 0 1437.17 1023.31">
+            <path id="SVGID_x5F_7_x5F_" class="st14" d="M655.85,863.37c12.82-0.25,44.18,0.17,56.99-0.09c5.86-0.12,40.84-2.01,52.83-2.41
+                c12.22-0.4,24.42-0.93,36.64-1.4c6.31-0.24,12.62-0.41,18.91-0.96c6.37-0.56,12.75-1.25,19.13-1.64
+                c12.34-0.75,24.79-1.37,37.07-2.81c12.12-1.42,24.25-2.78,36.37-4.2c0.96-0.11,1.92-0.23,2.88-0.34"
+            />
+            <text>
+                <textPath class="st14" href="#SVGID_x5F_7_x5F_">
+                    <tspan style="letter-spacing: 980;">Golf van Mexico</tspan>
+                </textPath>
+            </text>
+        </svg>
         <!-- <div id="map2"></div> -->
         <style>
+            .st115 {
+                font-size: 8px;
+            }
             body, html {
                 height: 100%;
                 width: 100%;
@@ -38,10 +67,47 @@
                 width: 100%;
                 height: 80%;
             }
+            p:nth-of-type(1) {
+                font-family: 'UniversLTPro-45Light';
+            }
+            p:nth-of-type(2) {
+                font-family: 'UniversLTPro-45LightOblique';
+            }
+            p:nth-of-type(3) {
+                font-family: 'UniversLTPro-55Oblique';
+            }
+            p:nth-of-type(4) {
+                font-family: 'UniversLTPro-55Roman';
+            }
+            p:nth-of-type(5) {
+                font-family: 'UniversLTPro-65Bold';
+            }
+            p:nth-of-type(6) {
+                font-family: 'UniversLTPro-65BoldOblique';
+            }
+            p:nth-of-type(7) {
+                font-family: 'UniversLTPro-BoldCond';
+            }
+            p:nth-of-type(8) {
+                font-family: 'UniversLTPro-BoldCondObl';
+            }
+            p:nth-of-type(9) {
+                font-family: 'UniversLTPro-Condensed';
+            }
+            p:nth-of-type(10) {
+                font-family: 'UniversLTPro-CondensedObl';
+            }
+            p:nth-of-type(11) {
+                font-family: 'UniversLTPro-LightCond';
+            }
+            p:nth-of-type(12) {
+                font-family: 'UniversLTPro-LightCondObl';
+            }
         </style>
         <!-- <script src="./script.js"></script> -->
         <!-- <script src="./rus-normal.js"></script> -->
         <script type="module" src="./rus-projected.js"></script>
+        <script type="module" src="./performanceSvg.js"></script>
         <!-- <script src="./azie-projected.js"></script> -->
     </body>
 </html>

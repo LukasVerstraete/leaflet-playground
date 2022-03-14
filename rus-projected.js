@@ -1,4 +1,12 @@
-import { svgOverlay } from "./svgOverlay.js";
+import { svgOverlay } from './svgOverlay.js';
+import {
+    performanceTestAsync,
+    performanceTest,
+    loadSvg,
+    testFN,
+    offscreenRender,
+    loadSvgElement
+} from './performanceSvg.js';
 
 const crsResolutions = [
     8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1,
@@ -323,7 +331,8 @@ const projBounds = L.bounds([-624.8002276396273, -524.3640295814912], [565.91076
 const earthDist = L.CRS.Earth.distance;
 L.CRS.Earth.distance = () => {};
 
-const rusImage = './Usm12500.svg';
+const rusImage = './klimaat-stromingen.svg';
+// const rusImage = 'RUS.svg';
 const csrRusland = new L.Proj.CRS(
     'EPSG:2400',
     '+proj=lcc +lat_1=40 +lat_2=70 +lat_0=55 +lon_0=92 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs',
@@ -332,6 +341,10 @@ const csrRusland = new L.Proj.CRS(
         bounds: projBounds
     }
 );
+
+
+
+
 
 L.CRS.Earth.distance = earthDist;
 csrRusland.distance = (lat, lng) => {return L.CRS.Earth.distance(lat, lng)}
@@ -359,11 +372,13 @@ const rusBounds = L.bounds(
     csrRusland.project(unprojbounds.getNorthWest())
 );
 
-const test = svgOverlay(rusParams.image, rusBounds).addTo(map);
+// const test = svgOverlay(rusParams.image, rusBounds).addTo(map);
+// const test = L.Proj.ImageOverlay(undefined, rusBounds).addTo(map);
+
 
 map.setView(map.unproject(projBounds.getCenter()), 1);
-var result = await fetch(rusImage);
-test.setInnerHtml(await result.text());
+// const result = await fetch(rusImage);
+// test.setInnerHtml(await result.text());
 
 map.on('load', () => {
     map.setView(projBounds.getCenter());
@@ -395,3 +410,27 @@ map.on(L.Draw.Event.CREATED, (e) => {
  checkbox.addEventListener('change', (e) => {
     document.getElementById('L1').style.display = e.target.checked ? 'unset' : 'none';
  });
+
+
+const loadBtn = document.getElementById('load-btn');
+loadBtn.addEventListener('click', loadImage);
+
+
+async function loadImage() {
+    // const dataUrl = await performanceTestAsync(loadSvg, rusImage);
+    // console.log(dataUrl);
+    const result = await performanceTestAsync(testFN, rusImage);
+    new L.Proj.ImageOverlay(result, rusBounds).addTo(map);
+
+    // const {svgText, width, height} = await loadSvgElement(rusImage);
+    // const newHeight = height / width * 2500;
+    // console.log(width, 2500, height, newHeight)
+    // const url = await offscreenRender(svgText, 2500, newHeight);
+    // new L.Proj.ImageOverlay(url, rusBounds).addTo(map);
+}
+
+
+
+// const test = svgOverlay(rusParams.image, rusBounds).addTo(map);
+// const result = await fetch(rusImage);
+// test.setInnerHtml(await result.text());

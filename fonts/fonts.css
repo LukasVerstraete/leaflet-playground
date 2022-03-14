@@ -1,0 +1,83 @@
+@font-face {
+	font-family: 'UniversLTPro-45Light';
+	src: url('./UniversLTPro-45Light.woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'UniversLTPro-45LightOblique';
+	src: url('./UniversLTPro-45LightOblique.woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'UniversLTPro-55Oblique';
+	src: url('./UniversLTPro-55Oblique.woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'UniversLTPro-55Roman';
+	src: url('./UniversLTPro-55Roman.woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'UniversLTPro-65Bold';
+	src: url('./UniversLTPro-65Bold.woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'UniversLTPro-65BoldOblique';
+	src: url('./UniversLTPro-65BoldOblique.woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'UniversLTPro-BoldCond';
+	src: url('./UniversLTPro-BoldCond.woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'UniversLTPro-BoldCondObl';
+	src: url('./UniversLTPro-BoldCondObl.woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'UniversLTPro-Condensed';
+	src: url('./UniversLTPro-Condensed.woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'UniversLTPro-CondensedObl';
+	src: url('./UniversLTPro-CondensedObl.woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'UniversLTPro-LightCond';
+	src: url('./UniversLTPro-LightCond.woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'UniversLTPro-LightCondObl';
+	src: url('./UniversLTPro-LightCondObl.woff');
+	font-weight: normal;
+	font-style: normal;
+}
